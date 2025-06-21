@@ -9,16 +9,16 @@
     CompatiblePSEditions = @('Desktop', 'Core')
     
     # ID used to uniquely identify this module
-    GUID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'
+    GUID = 'f8e9d7c6-b5a4-4321-8765-0987654321ab'
     
     # Author of this module
-    Author = 'Your Name'
+    Author = 'Nemanja Krivokapic'
     
     # Company or vendor of this module
-    CompanyName = 'Your Company'
+    CompanyName = 'KNetwork Solutions'
     
     # Copyright statement for this module
-    Copyright = '(c) 2024. All rights reserved.'
+    Copyright = '(c) 2025. All rights reserved.'
     
     # Description of the functionality provided by this module
     Description = 'A PowerShell module for managing and switching between multiple JDK installations on Windows. Supports automatic JDK detection, custom paths, and environment management.'
@@ -88,7 +88,8 @@
     # List of all files packaged with this module
     FileList = @(
         'JDKManager.psm1',
-        'README.md'
+        'README.md',
+        'LICENSE'
     )
     
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also be a PSObject that contains additional module configuration used by the module.
@@ -98,10 +99,10 @@
             Tags = @('Java', 'JDK', 'Development', 'Environment', 'Management', 'Windows')
             
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/yourusername/jdk-manager/blob/main/LICENSE'
+            LicenseUri = 'https://github.com/nkrivokapic/jdk-manager/blob/master/LICENSE'
             
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/yourusername/jdk-manager'
+            ProjectUri = 'https://github.com/nkrivokapic/jdk-manager'
             
             # A URL to an icon representing this module.
             # IconUri = ''

@@ -10,13 +10,13 @@ Write-Host "JDK Manager Module Publisher" -ForegroundColor Cyan
 Write-Host "=============================" -ForegroundColor Cyan
 
 # Check if we're in the right directory
-if (-not (Test-Path "JDKManager.psd1")) {
-    Write-Error "JDKManager.psd1 not found. Please run this script from the module directory."
+if (-not (Test-Path "JDKManager\JDKManager.psd1")) {
+    Write-Error "JDKManager\JDKManager.psd1 not found. Please run this script from the module directory."
     exit 1
 }
 
 # Check if required files exist
-$requiredFiles = @("JDKManager.psd1", "JDKManager.psm1", "README.md", "LICENSE")
+$requiredFiles = @("JDKManager\JDKManager.psd1", "JDKManager\JDKManager.psm1", "JDKManager\README.md", "JDKManager\LICENSE")
 foreach ($file in $requiredFiles) {
     if (-not (Test-Path $file)) {
         Write-Error "Required file not found: $file"
@@ -29,7 +29,7 @@ Write-Host "Required files found." -ForegroundColor Green
 # Test the module
 Write-Host "`nTesting module..." -ForegroundColor Yellow
 try {
-    Import-Module .\JDKManager.psd1 -Force
+    Import-Module .\JDKManager\JDKManager.psd1 -Force
     $functions = Get-Command -Module JDKManager
     Write-Host "Module loaded successfully. Found $($functions.Count) functions:" -ForegroundColor Green
     $functions | ForEach-Object { Write-Host "  - $($_.Name)" -ForegroundColor White }
@@ -42,7 +42,7 @@ try {
 # Validate manifest
 Write-Host "`nValidating module manifest..." -ForegroundColor Yellow
 try {
-    Test-ModuleManifest .\JDKManager.psd1
+    Test-ModuleManifest .\JDKManager\JDKManager.psd1
     Write-Host "Manifest validation passed." -ForegroundColor Green
 } catch {
     Write-Error "Manifest validation failed: $_"
@@ -54,8 +54,7 @@ if (-not $ApiKey) {
     Write-Host "`nNo API key provided. You can:" -ForegroundColor Yellow
     Write-Host "1. Run: .\Publish-Module.ps1 -ApiKey 'your-api-key'" -ForegroundColor White
     Write-Host "2. Or set it interactively below" -ForegroundColor White
-    $ApiKey = Read-Host "Enter your PowerShell Gallery API key" -AsSecureString
-    $ApiKey = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($ApiKey))
+    $ApiKey = Read-Host "Enter your PowerShell Gallery API key"
 }
 
 if (-not $ApiKey) {
@@ -79,7 +78,7 @@ if ($confirm -ne 'y' -and $confirm -ne 'Y') {
 # Publish the module
 Write-Host "`nPublishing module to $Repository..." -ForegroundColor Yellow
 try {
-    Publish-Module -Path . -NuGetApiKey $ApiKey -Repository $Repository -Force
+    Publish-Module -Path .\JDKManager -NuGetApiKey $ApiKey -Repository $Repository -Force
     Write-Host "`nModule published successfully!" -ForegroundColor Green
     Write-Host "You can now install it with: Install-Module -Name JDKManager" -ForegroundColor Cyan
 } catch {
