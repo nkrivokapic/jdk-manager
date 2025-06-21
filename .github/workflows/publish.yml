@@ -29,11 +29,11 @@ jobs:
         $manifest = Test-ModuleManifest .\JDKManager\JDKManager.psd1
         echo "version=$($manifest.Version)" >> $env:GITHUB_OUTPUT
         
-    # - name: Publish to PowerShell Gallery
-    #   run: |
-    #     Publish-Module -Path .\JDKManager -NuGetApiKey ${{ secrets.PSGALLERY_API_KEY }} -Repository PSGallery -Force
-    #   env:
-    #     PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
+    - name: Publish to PowerShell Gallery
+      run: |
+        Publish-Module -Path .\JDKManager -NuGetApiKey ${{ secrets.PSGALLERY_API_KEY }} -Repository PSGallery -Force
+      env:
+        PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
         
     - name: Create Release
       run: |
