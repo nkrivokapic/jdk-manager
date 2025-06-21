@@ -5,6 +5,10 @@ on:
     branches: [ master, main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   publish:
     runs-on: windows-latest
