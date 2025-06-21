@@ -34,6 +34,6 @@ jobs:
     - name: Create Release
       run: |
         $version = "${{ steps.version.outputs.version }}"
-        gh release create "v$version" --title "JDKManager v$version" --notes "PowerShell Gallery release v$version" --draft false --prerelease false
+        gh release create "v$version" --title "JDKManager v$version" --notes "PowerShell Gallery release v$version"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
