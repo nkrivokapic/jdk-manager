@@ -18,6 +18,18 @@ A PowerShell module for managing and switching between multiple JDK installation
 Install-Module -Name JDKManager -Repository PSGallery
 ```
 
+**Note**: If you encounter execution policy errors, you may need to adjust your PowerShell execution policy:
+```powershell
+# Check current execution policy
+Get-ExecutionPolicy
+
+# Set execution policy to allow signed scripts (recommended)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Or set to allow all scripts (less secure, use with caution)
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+```
+
 ### Manual Installation
 1. Clone this repository
 2. Copy the `JDKManager` folder to one of your PowerShell module paths:
@@ -155,6 +167,37 @@ Set-JDKVersion -Version "11"
 
 # This affects the entire system (requires elevation)
 Set-DefaultJDK -Version "17"
+```
+
+## Troubleshooting
+
+### Execution Policy Issues
+If you see an error about execution policies when importing the module:
+
+```powershell
+# Check your current execution policy
+Get-ExecutionPolicy
+
+# Set to allow signed scripts (recommended)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Verify the change
+Get-ExecutionPolicy
+```
+
+### Module Not Found
+If the module isn't found after installation:
+
+```powershell
+# Check if module is installed
+Get-Module -ListAvailable -Name JDKManager
+
+# Check module paths
+$env:PSModulePath -split ';'
+
+# Force reinstall
+Uninstall-Module -Name JDKManager -AllVersions
+Install-Module -Name JDKManager -Force
 ```
 
 ## Requirements
