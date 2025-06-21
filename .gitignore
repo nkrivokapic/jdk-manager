@@ -1,0 +1,30 @@
+# PowerShell Gallery package files
+*.nupkg
+
+# Module cache
+*.psm1.bak
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+
+# Build artifacts
+build/
+dist/ 
