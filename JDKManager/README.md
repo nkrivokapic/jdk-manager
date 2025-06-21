@@ -13,10 +13,24 @@ A PowerShell module for managing and switching between multiple JDK installation
 
 ## Installation
 
+### From PowerShell Gallery (Recommended)
+```powershell
+Install-Module -Name JDKManager -Repository PSGallery
+```
+
+### Manual Installation
 1. Clone this repository
-2. Import the module in PowerShell:
+2. Copy the `JDKManager` folder to one of your PowerShell module paths:
    ```powershell
-   Import-Module .\JDKManager.psm1
+   # Check your module paths
+   $env:PSModulePath -split ';'
+   
+   # Copy to user module path (recommended)
+   Copy-Item -Path ".\JDKManager" -Destination "$env:USERPROFILE\Documents\PowerShell\Modules\" -Recurse
+   ```
+3. Import the module:
+   ```powershell
+   Import-Module JDKManager
    ```
 
 ## Usage
@@ -106,8 +120,8 @@ The module automatically scans for JDK installations from multiple sources:
 
 ### Basic Usage
 ```powershell
-# Import the module
-Import-Module .\JDKManager.psm1
+# Install from PowerShell Gallery
+Install-Module -Name JDKManager
 
 # See what JDKs are available
 Get-JDKInstallations
