@@ -1,0 +1,72 @@
+name: Publish to PowerShell Gallery
+
+on:
+  push:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup PowerShell
+      uses: actions/setup-powershell@v1
+      with:
+        powershell-version: '7.0'
+        
+    - name: Validate module
+      run: |
+        Test-ModuleManifest .\JDKManager\JDKManager.psd1
+        Import-Module .\JDKManager\JDKManager.psd1 -Force
+        Get-Command -Module JDKManager
+        
+    - name: Get version from manifest
+      id: version
+      run: |
+        $manifest = Test-ModuleManifest .\JDKManager\JDKManager.psd1
+        echo "version=$($manifest.Version)" >> $env:GITHUB_OUTPUT
+        
+    - name: Publish to PowerShell Gallery
+      run: |
+        Publish-Module -Path .\JDKManager -NuGetApiKey ${{ secrets.PSGALLERY_API_KEY }} -Repository PSGallery -Force
+      env:
+        PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
+        
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.version }}
+        release_name: JDKManager v${{ steps.version.outputs.version }}
+        body: |
+          ## What's New in v${{ steps.version.outputs.version }}
+          
+          ### Features
+          - Automatic JDK detection from registry and file system
+          - Custom JDK path management
+          - Session and system-wide JDK switching
+          - Automatic privilege elevation for system changes
+          
+          ### Installation
+          ```powershell
+          Install-Module -Name JDKManager -Repository PSGallery
+          ```
+          
+          ### Usage
+          ```powershell
+          # List all JDK installations
+          Get-JDKInstallations
+          
+          # Switch JDK for current session
+          Set-JDKVersion -Version "17"
+          
+          # Set system default JDK
+          Set-DefaultJDK -Version "17"
+          ```
+        draft: false
+        prerelease: false 
